@@ -69,7 +69,7 @@ class SignupPage extends StatelessWidget {
                           minWidth: double.infinity,
                           height:60,
                           onPressed: (){},
-                          color: Colors.redAccent,
+                          color: Colors.blue,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40)
                           ),
@@ -87,7 +87,7 @@ class SignupPage extends StatelessWidget {
                         Text("Already have an account? "),
                         Text("Login",style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 18
+                            fontSize: 18,
                         ),),
                       ],
                     )
