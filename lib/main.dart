@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'HomePage.dart';
 import 'login-screen.dart';
 
-void main() {
+void main() async{
+	WidgetsFlutterBinding.ensureInitialized();
+	await Firebase.intializeApp();
 	SystemChrome.setSystemUIOverlayStyle(
 		SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 runApp(MyApp());
