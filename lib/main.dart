@@ -5,14 +5,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'HomePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
 	 WidgetsFlutterBinding.ensureInitialized();
-	 await Firebase.initializeApp( 	options: const FirebaseOptions(
-			appId: 'my_appId',
-			apiKey: 'my_apiKey',
-			messagingSenderId: 'my_messagingSenderId',
-			projectId: 'my_projectId'
-	));
+	 await Firebase.initializeApp(
+		 options: DefaultFirebaseOptions.currentPlatform,
+	 );
    runApp(MyApp());
 }
 
