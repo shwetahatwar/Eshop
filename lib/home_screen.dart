@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var queryResultSet = [];
   var tempSearchStore = [];
 
+
   initiateSearch(value){
     if(value.length == 0){
       setState((){
