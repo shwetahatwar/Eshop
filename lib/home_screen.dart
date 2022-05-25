@@ -1,7 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eshop/Services/search_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'Home/dashboard.dart';
 import 'login-screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,12 +12,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var queryResultSet = [];
+  var tempSearchStore = [];
+
+  initiateSearch(value){
+    if(value.length == 0){
+      setState((){
+        queryResultSet = [];
+        tempSearchStore = [];
+      });
+    }
+    var capitalizedValue = value.substring(0,1).toUpperCase() + value.substring(1);
+    if(queryResultSet.length == 0 && value.length == 1){
+      SearchService().searchByName(value).then((QuerySnapshot docs){
+        for(int i = 0; i < docs.docs.length; ++i){
+          queryResultSet.add(docs.docs[i].data);
+        }
+      });
+    }
+    else{
+      tempSearchStore = [];
+      queryResultSet.forEach((element) {
+        if(element['dress'].startsWith(capitalizedValue)){
+          setState((){
+            tempSearchStore.add(element);
+            });
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('title'),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+          IconButton(onPressed: () {
+            showSearch(context: context, delegate: MySearchDelegate(),);
+          }, icon: const Icon(Icons.search))
         ],
       ),
 
@@ -125,3 +157,77 @@ class _HomeScreenState extends State<HomeScreen> {
     // );
   }
 }
+
+class MySearchDelegate extends SearchDelegate {
+
+  List<String> searchTerms = [
+    "Apple",
+    "Banana",
+    "Mango",
+    "Pear",
+    "Watermelons",
+    "Blueberries",
+    "Pineapples",
+    "Strawberries"
+  ];
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        close(context, null);
+      },
+      icon: Icon(Icons.arrow_back),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    List<String> matchQuery = [];
+    for (var fruit in searchTerms) {
+      if (fruit.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(fruit);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title: Text(result),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<String> matchQuery = [];
+    for (var fruit in searchTerms) {
+      if (fruit.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(fruit);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title: Text(result),
+        );
+      },
+    );
+  }
+  }
