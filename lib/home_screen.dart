@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/Services/search_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  
+
  // var queryResultSet = [];
  // var tempSearchStore = [];
 
@@ -52,12 +54,13 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(onPressed: () {
             showSearch(context: context, delegate: MySearchDelegate(),);
-          }, icon: const Icon(Icons.search))
+          }, icon: const Icon(Icons.search)),
+
+          IconButton(onPressed: (){}, icon: const Icon(Icons.shopping_cart))
         ],
       ),
 
-      // body: const Center(
-      //   child: Text('My Page!'),
+      // body: const Center(//   child: Text('My Page!'),
       // ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
