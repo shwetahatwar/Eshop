@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/Services/search_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'detail-page.dart';
 import 'login-screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,36 +13,37 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var queryResultSet = [];
-  var tempSearchStore = [];
+  
+ // var queryResultSet = [];
+ // var tempSearchStore = [];
 
 
-  initiateSearch(value){
-    if(value.length == 0){
-      setState((){
-        queryResultSet = [];
-        tempSearchStore = [];
-      });
-    }
-    var capitalizedValue = value.substring(0,1).toUpperCase() + value.substring(1);
-    if(queryResultSet.length == 0 && value.length == 1){
-      SearchService().searchByName(value).then((QuerySnapshot docs){
-        for(int i = 0; i < docs.docs.length; ++i){
-          queryResultSet.add(docs.docs[i].data);
-        }
-      });
-    }
-    else{
-      tempSearchStore = [];
-      queryResultSet.forEach((element) {
-        if(element['dress'].startsWith(capitalizedValue)){
-          setState((){
-            tempSearchStore.add(element);
-            });
-        }
-      });
-    }
-  }
+  // initiateSearch(value){
+  //   if(value.length == 0){
+  //     setState((){
+  //       queryResultSet = [];
+  //       tempSearchStore = [];
+  //     });
+  //   }
+  //   var capitalizedValue = value.substring(0,1).toUpperCase() + value.substring(1);
+  //   if(queryResultSet.length == 0 && value.length == 1){
+  //     SearchService().searchByName(value).then((QuerySnapshot docs){
+  //       for(int i = 0; i < docs.docs.length; ++i){
+  //         queryResultSet.add(docs.docs[i].data);
+  //       }
+  //     });
+  //   }
+  //   else{
+  //     tempSearchStore = [];
+  //     queryResultSet.forEach((element) {
+  //       if(element['dress'].startsWith(capitalizedValue)){
+  //         setState((){
+  //           tempSearchStore.add(element);
+  //           });
+  //       }
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -161,16 +163,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class MySearchDelegate extends SearchDelegate {
 
-  List<String> searchTerms = [
-    "Apple",
-    "Banana",
-    "Mango",
-    "Pear",
-    "Watermelons",
-    "Blueberries",
-    "Pineapples",
-    "Strawberries"
-  ];
+  CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('dress');
+
+  // List<String> searchTerms = [
+  //   "Apple",
+  //   "Banana",
+  //   "Mango",
+  //   "Pear",
+  //   "Watermelons",
+  //   "Blueberries",
+  //   "Pineapples",
+  //   "Strawberries"
+  // ];
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -196,39 +200,87 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: _firebaseFirestore.snapshots().asBroadcastStream(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+        if(!snapshot.hasData){
+          return Center(child: CircularProgressIndicator());
+        }
+        else{
+          if(snapshot.data!.docs.where(
+                  (QueryDocumentSnapshot<Object?> element) => element['dress']
+                  .toString()
+                  .toLowerCase()
+                  .contains(query.toLowerCase())).isEmpty){
+            return Center(child: Text("No search query found"),);
+          }
+else{
+            return ListView(
+              children: [
+                ...snapshot.data!.docs.where(
+                        (QueryDocumentSnapshot<Object?> element) => element['dress']
+                        .toString()
+                        .toLowerCase()
+                        .contains(query.toLowerCase())).map((QueryDocumentSnapshot<Object?> data) {
+                  final String dress = data.get('title');
+                  final String color = data['grey'];
+                  final String image = data['image'];
+
+                  return ListTile(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailPage(data:data,)));
+                    },
+                    title: Text(dress),
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage(image),
+                    ),
+                    subtitle: Text(color),
+                  );
+                })
+
+              ],
+            );
+          }
+          //print(snapshot.data);
+
+        }
       }
-    }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-        );
-      },
     );
+    // List<String> matchQuery = [];
+    // for (var fruit in searchTerms) {
+    //   if (fruit.toLowerCase().contains(query.toLowerCase())) {
+    //     matchQuery.add(fruit);
+    //   }
+    // }
+    // return ListView.builder(
+    //   itemCount: matchQuery.length,
+    //   itemBuilder: (context, index) {
+    //     var result = matchQuery[index];
+    //     return ListTile(
+    //       title: Text(result),
+    //     );
+    //   },
+    // );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
-      }
-    }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-        );
-      },
-    );
+    return Center(child: Text("Search anything here"));
+    // List<String> matchQuery = [];
+    // for (var fruit in searchTerms) {
+    //   if (fruit.toLowerCase().contains(query.toLowerCase())) {
+    //     matchQuery.add(fruit);
+    //   }
+    // }
+    // return ListView.builder(
+    //   itemCount: matchQuery.length,
+    //   itemBuilder: (context, index) {
+    //     var result = matchQuery[index];
+    //     return ListTile(
+    //       title: Text(result),
+    //     );
+    //   },
+    // );
   }
   }
