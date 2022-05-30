@@ -24,7 +24,7 @@ final QueryDocumentSnapshot<Object?>? data;
           borderRadius: BorderRadius.circular(5.0)),
       child: new Text(
         // "\$20",
-        "\$" + lesson.price.toString(),
+        "\$" + lesson.toString(),
         style: TextStyle(color: Colors.white),
       ),
     );
@@ -44,7 +44,7 @@ final QueryDocumentSnapshot<Object?>? data;
         ),
         SizedBox(height: 10.0),
         Text(
-          lesson.title,
+          lesson.title.toString(),
           style: TextStyle(color: Colors.white, fontSize: 45.0),
         ),
         SizedBox(height: 30.0),

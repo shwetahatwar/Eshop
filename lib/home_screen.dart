@@ -1,11 +1,14 @@
 import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eshop/Home/products.dart';
 import 'package:eshop/Services/search_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'Home/body.dart';
 import 'detail-page.dart';
 import 'login-screen.dart';
+import 'my_store.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,41 +19,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
- // var queryResultSet = [];
- // var tempSearchStore = [];
-
-
-  // initiateSearch(value){
-  //   if(value.length == 0){
-  //     setState((){
-  //       queryResultSet = [];
-  //       tempSearchStore = [];
-  //     });
-  //   }
-  //   var capitalizedValue = value.substring(0,1).toUpperCase() + value.substring(1);
-  //   if(queryResultSet.length == 0 && value.length == 1){
-  //     SearchService().searchByName(value).then((QuerySnapshot docs){
-  //       for(int i = 0; i < docs.docs.length; ++i){
-  //         queryResultSet.add(docs.docs[i].data);
-  //       }
-  //     });
-  //   }
-  //   else{
-  //     tempSearchStore = [];
-  //     queryResultSet.forEach((element) {
-  //       if(element['dress'].startsWith(capitalizedValue)){
-  //         setState((){
-  //           tempSearchStore.add(element);
-  //           });
-  //       }
-  //     });
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('title'),
+      appBar: AppBar(title: Text('Eshop'),
         actions: [
           IconButton(onPressed: () {
             showSearch(context: context, delegate: MySearchDelegate(),);
@@ -60,8 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
 
-      // body: const Center(//   child: Text('My Page!'),
-      // ),
+      body: const Center( child: Text('My Page!'),
+
+      ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
@@ -82,7 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pop(context);
+                //Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyProduct()));
               },
             ),
             ListTile(
@@ -166,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class MySearchDelegate extends SearchDelegate {
 
-  CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('dress');
+  CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('watch');
 
   // List<String> searchTerms = [
   //   "Apple",
@@ -212,7 +187,7 @@ class MySearchDelegate extends SearchDelegate {
         }
         else{
           if(snapshot.data!.docs.where(
-                  (QueryDocumentSnapshot<Object?> element) => element['dress']
+                  (QueryDocumentSnapshot<Object?> element) => element['watch']
                   .toString()
                   .toLowerCase()
                   .contains(query.toLowerCase())).isEmpty){
@@ -222,19 +197,19 @@ else{
             return ListView(
               children: [
                 ...snapshot.data!.docs.where(
-                        (QueryDocumentSnapshot<Object?> element) => element['dress']
+                        (QueryDocumentSnapshot<Object?> element) => element['watch']
                         .toString()
                         .toLowerCase()
                         .contains(query.toLowerCase())).map((QueryDocumentSnapshot<Object?> data) {
-                  final String dress = data.get('title');
+                  final String watch = data.get('watch');
                   final String color = data['grey'];
                   final String image = data['image'];
 
                   return ListTile(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailPage(data:data,)));
-                    },
-                    title: Text(dress),
+                    // onTap: (){
+                    //   Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailPage(data:data)));
+                    // },
+                    title: Text(watch),
                     leading: CircleAvatar(
                       backgroundImage: AssetImage(image),
                     ),
