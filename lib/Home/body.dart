@@ -229,7 +229,7 @@ class ProductBox extends StatelessWidget {
         height: 140,
         child: Card(
           child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Image.asset("assets/images/" + this.item!.image),
                 Expanded(
