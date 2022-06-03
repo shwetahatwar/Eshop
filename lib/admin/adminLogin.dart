@@ -32,7 +32,7 @@ class AdminSignInPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: AdminSignInScreen(),
+      body:  AdminSignInScreen(),
     );
   }
 }
@@ -81,27 +81,59 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
                 height: 5,
               ),
               //forgetPassword(context),
-              firebaseUIButton(context, "Sign In", () {
-                FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                    email: _adminIDTextController.text,
-                    password: _passwordTextController.text)
-                    .then((value) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => StoreHome()));
-                }).onError((error, stackTrace) {
-                  print("Error ${error.toString()}");
-                });
-              }),
+              RaisedButton(
+                  onPressed: (){
+                    _adminIDTextController.text.isNotEmpty && _passwordTextController.text.isNotEmpty
+                        ?loginAdmin()
+                        :showDialog(
+                        context: context,
+                        builder: (c){
+                          return Text("please write email & password");
+                        });
+                  },
+                color: Colors.purple,
+                child: Text("Login",style: TextStyle(color: Colors.white),),
+              ),
+              SizedBox(
+                height: 50.0,
+              ),
+              Container(
+                height: 4.0,
+                width:  0.8,
+                color: Colors.purple,
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              FlatButton.icon(
+                  onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => AuthenticScreen())),
+                  icon: (Icon(Icons.nature_people,color: Colors.purple,)),
+                  label: Text("i'm not Admin",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.bold),),)
+              // firebaseUIButton(context, "Sign In", () {
+              //   FirebaseAuth.instance
+              //       .signInWithEmailAndPassword(
+              //       email: _adminIDTextController.text,
+              //       password: _passwordTextController.text)
+              //       .then((value) {
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => StoreHome()));
+              //   }).onError((error, stackTrace) {
+              //     print("Error ${error.toString()}");
+              //   });
+              // }),
               
-              FlatButton.icon(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> AuthenticScreen())),
-                  icon: (Icon(Icons.nature_people, color: Colors.pink,)),
-                  label: Text("i'm not admin",style: TextStyle(color: Colors.pink,fontWeight: FontWeight.bold),))
+              // FlatButton.icon(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> AuthenticScreen())),
+              //     icon: (Icon(Icons.nature_people, color: Colors.pink,)),
+              //     label: Text("i'm not admin",style: TextStyle(color: Colors.pink,fontWeight: FontWeight.bold),))
               // signUpOption()
             ],
           ),
         ),
       );
+  }
+
+  loginAdmin() {
+
   }
 
   // loginAdmin(){

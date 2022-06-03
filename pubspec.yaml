@@ -45,6 +45,11 @@ dependencies:
   firestore_search: ^0.1.9
   flutter_svg: ^0.17.4
   shared_preferences: ^2.0.15
+  camera: ^0.9.7+1
+  gallery: ^0.0.1
+  permission_handler: ^8.0.0+2
+  image_picker: ^0.8.2
+
 
 
 
