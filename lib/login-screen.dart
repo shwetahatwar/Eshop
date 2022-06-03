@@ -2,6 +2,7 @@ import 'package:eshop/reset_password.dart';
 import 'package:eshop/reusable_widgets/reusable_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'Home/storehome.dart';
 import 'SignUp.dart';
 import 'Utils/colors_utils.dart';
 import 'home_screen.dart';
@@ -28,7 +29,8 @@ class _SignInScreenState extends State<SignInScreen> {
               hexStringToColor("CB2B93"),
               hexStringToColor("9546C4"),
               hexStringToColor("5E61F4")
-            ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+            ],
+                begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -57,7 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       password: _passwordTextController.text)
                       .then((value) {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                        MaterialPageRoute(builder: (context) => StoreHome()));
                   }).onError((error, stackTrace) {
                     print("Error ${error.toString()}");
                   });

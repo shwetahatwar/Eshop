@@ -27,7 +27,7 @@ class AdminSignInPage extends StatelessWidget {
         ),
         title: Text(
           "e-Shop",
-          style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "Signatra"),
+          style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "KdamThmorPro-Regular"),
         ),
         centerTitle: true,
       ),
@@ -103,28 +103,28 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
       );
   }
 
-  loginAdmin(){
-    FirebaseFirestore.instance.collection("admins").getDocuments().then((snapshot){
-      snapshot.documents.forEach((result){
-        if(result.data["id"] != _adminIDTextController.text.trim()){
-          Scaffold.of(context).showSnackBar(SnackBar(content: Text("your id is not correct")));
-        }
-        else if(result.data["password"] != _passwordTextController.text.trim()){
-          Scaffold.of(context).showSnackBar(SnackBar(content: Text("your password is not correct"),));
-        }
-        else{
-          Scaffold.of(context).showSnackBar(SnackBar(content: Text("Welcome Admin," + result.data["name"]),));
-
-          setState((){
-            _adminIDTextController.text = "";
-            _passwordTextController.text = "";
-          });
-
-          Route route = MaterialPageRoute(builder: (c) => UploadPage());
-          Navigator.pushReplacement(context, route);
-
-        }
-      });
-    });
-  }
+  // loginAdmin(){
+  //   FirebaseFirestore.instance.collection("admins").getDocuments().then((snapshot){
+  //     snapshot.documents.forEach((result){
+  //       if(result.data["id"] != _adminIDTextController.text.trim()){
+  //         Scaffold.of(context).showSnackBar(SnackBar(content: Text("your id is not correct")));
+  //       }
+  //       else if(result.data["password"] != _passwordTextController.text.trim()){
+  //         Scaffold.of(context).showSnackBar(SnackBar(content: Text("your password is not correct"),));
+  //       }
+  //       else{
+  //         Scaffold.of(context).showSnackBar(SnackBar(content: Text("Welcome Admin," + result.data["name"]),));
+  //
+  //         setState((){
+  //           _adminIDTextController.text = "";
+  //           _passwordTextController.text = "";
+  //         });
+  //
+  //         Route route = MaterialPageRoute(builder: (c) => UploadPage());
+  //         Navigator.pushReplacement(context, route);
+  //
+  //       }
+  //     });
+  //   });
+  // }
 }

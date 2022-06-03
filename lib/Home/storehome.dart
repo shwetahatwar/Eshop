@@ -34,7 +34,7 @@ class _StoreHomeState extends State<StoreHome> {
             ),
             title: Text(
               "e-Shop",
-              style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "Signatra"),
+              style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "KdamThmorPro-Regular"),
             ),
             centerTitle: true,
             actions: [

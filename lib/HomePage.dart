@@ -10,6 +10,7 @@ import 'Walkthrough-screens/Page1.dart';
 import 'Walkthrough-screens/Page2.dart';
 import 'Walkthrough-screens/Page3.dart';
 import 'Walkthrough-screens/Page4.dart';
+import 'admin/authentication.dart';
 
 class HomePage extends StatelessWidget {
 	final _controller = PageController();
@@ -31,7 +32,7 @@ Widget build(BuildContext context) {
 						//after spalsh screen login page loading
 						Timer(Duration(seconds: 3), () {
 							Navigator.of(context)
-									.pushReplacement(MaterialPageRoute(builder: (_) => SignInScreen()));
+									.pushReplacement(MaterialPageRoute(builder: (_) => AuthenticScreen()));
 						});
 						},
 						controller: _controller,
