@@ -41,7 +41,7 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
             ),
             title: Text(
               "e-Shop",
-              style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "KdamThmorPro-Regular"),
+              style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "CharisSIL-Regular"),
             ),
             centerTitle: true,
             bottom: TabBar(

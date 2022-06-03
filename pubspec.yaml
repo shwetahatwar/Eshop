@@ -77,6 +77,10 @@ flutter:
     - assets/
     - assets/images/
     - assets/font/KdamThmorPro-Regular.ttf
+    - assets/font/CharisSIL-Bold.ttf
+    - assets/font/CharisSIL-BoldItalic.ttf
+    - assets/font/CharisSIL-Italic.ttf
+    - assets/font/CharisSIL-Regular.ttf
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

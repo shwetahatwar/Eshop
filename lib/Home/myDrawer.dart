@@ -3,6 +3,7 @@ import 'package:eshop/Home/storehome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../Utils/colors_utils.dart';
 import '../login-screen.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -15,15 +16,22 @@ class MyDrawer extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.only(top: 25.0, bottom: 10.0),
-            decoration: new BoxDecoration(
-              gradient: new LinearGradient(
-                colors: [Colors.pink, Colors.lightGreenAccent],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(1.0, 0.0),
-                stops: [0.0,1.0],
-                tileMode: TileMode.clamp,
-              ),
-            ),
+            // decoration: new BoxDecoration(
+            //   gradient: new LinearGradient(
+            //     colors: [Colors.pink, Colors.lightGreenAccent],
+            //     begin: const FractionalOffset(0.0, 0.0),
+            //     end: const FractionalOffset(1.0, 0.0),
+            //     stops: [0.0,1.0],
+            //     tileMode: TileMode.clamp,
+            //   ),
+            // ),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  hexStringToColor("CB2B93"),
+                  hexStringToColor("9546C4"),
+                  hexStringToColor("5E61F4")
+                ],
+                    begin: Alignment.topCenter, end: Alignment.bottomCenter)),
             child: Column(
               children: [
                 Material(
@@ -40,15 +48,22 @@ class MyDrawer extends StatelessWidget {
                 SizedBox(height: 12.0,),
                 Container(
                   padding: EdgeInsets.only(top: 1.0),
-                  decoration: new BoxDecoration(
-                    gradient: new LinearGradient(
-                      colors: [Colors.pink, Colors.lightGreenAccent],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 0.0),
-                      stops: [0.0,1.0],
-                      tileMode: TileMode.clamp,
-                    ),
-                  ),
+                  // decoration: new BoxDecoration(
+                  //   gradient: new LinearGradient(
+                  //     colors: [Colors.pink, Colors.lightGreenAccent],
+                  //     begin: const FractionalOffset(0.0, 0.0),
+                  //     end: const FractionalOffset(1.0, 0.0),
+                  //     stops: [0.0,1.0],
+                  //     tileMode: TileMode.clamp,
+                  //   ),
+                  // ),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        hexStringToColor("CB2B93"),
+                        hexStringToColor("9546C4"),
+                        hexStringToColor("5E61F4")
+                      ],
+                          begin: Alignment.topCenter, end: Alignment.bottomCenter)),
                   child: Column(
                     children: [
                       ListTile(

@@ -2,6 +2,7 @@ import 'package:eshop/Home/myDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../Utils/colors_utils.dart';
 import 'cart.dart';
 import 'cartitemcounter.dart';
 
@@ -22,26 +23,23 @@ class _StoreHomeState extends State<StoreHome> {
         child:Scaffold(
           appBar: AppBar(
             flexibleSpace: Container(
-              decoration: new BoxDecoration(
-                gradient: new LinearGradient(
-                    colors: [Colors.pink, Colors.lightGreenAccent],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(1.0, 0.0),
-                stops: [0.0,1.0],
-                tileMode: TileMode.clamp,
-                ),
-              ),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    hexStringToColor("CB2B93"),
+                    hexStringToColor("9546C4"),
+                    hexStringToColor("5E61F4")
+                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
             ),
             title: Text(
               "e-Shop",
-              style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "KdamThmorPro-Regular"),
+              style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "CharisSIL-Regular"),
             ),
             centerTitle: true,
             actions: [
               Stack(
                 children: [
                   IconButton(
-                    icon:Icon(Icons.shopping_cart,color: Colors.pink,),
+                    icon:Icon(Icons.shopping_cart,color: Colors.purpleAccent,),
                     onPressed: ()
                     {
                       Route route = MaterialPageRoute(builder: (c) => CartPage());
@@ -54,7 +52,7 @@ class _StoreHomeState extends State<StoreHome> {
                           Icon(
                             Icons.brightness_1,
                             size: 20.0,
-                            color: Colors.green,
+                            color: Colors.blue,
                           ),
                           Positioned(
                             top: 3.0,

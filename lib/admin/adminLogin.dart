@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eshop/admin/authentication.dart';
 import 'package:eshop/admin/uploadItems.dart';
 import 'package:eshop/login-screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,7 +28,7 @@ class AdminSignInPage extends StatelessWidget {
         ),
         title: Text(
           "e-Shop",
-          style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "KdamThmorPro-Regular"),
+          style: TextStyle(fontSize: 55.0, color: Colors.white,fontFamily: "CharisSIL-Regular"),
         ),
         centerTitle: true,
       ),
@@ -93,7 +94,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
                 });
               }),
               
-              FlatButton.icon(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> SignInScreen())),
+              FlatButton.icon(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> AuthenticScreen())),
                   icon: (Icon(Icons.nature_people, color: Colors.pink,)),
                   label: Text("i'm not admin",style: TextStyle(color: Colors.pink,fontWeight: FontWeight.bold),))
               // signUpOption()

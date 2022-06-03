@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../Utils/colors_utils.dart';
+
 class Page4 extends StatelessWidget {
   const Page4({Key? key}) : super(key: key);
   @override
@@ -9,15 +11,11 @@ class Page4 extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFFFF8008),
-                  Color(0xFFCE1010),
-                ]
-            )
-        ),
+            gradient: LinearGradient(colors: [
+              hexStringToColor("CB2B93"),
+              hexStringToColor("9546C4"),
+              hexStringToColor("5E61F4")
+            ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
