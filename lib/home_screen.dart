@@ -1,14 +1,8 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eshop/Home/products.dart';
-import 'package:eshop/Services/search_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'Home/body.dart';
-import 'detail-page.dart';
 import 'login-screen.dart';
-import 'my_store.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

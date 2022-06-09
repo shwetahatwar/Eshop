@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:file/file.dart';
 import 'package:eshop/Walkthrough-screens/Page4.dart';
 import 'package:eshop/admin/loadingWidget.dart';
@@ -7,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../Utils/colors_utils.dart';
 import 'adminShiftOrders.dart';
-import 'package:camera/camera.dart';
 
 class UploadPage extends StatefulWidget {
   const UploadPage({Key? key}) : super(key: key);

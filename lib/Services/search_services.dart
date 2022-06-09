@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore_web/cloud_firestore_web.dart';
+
 class SearchService{
 
   searchByName(String searchField){

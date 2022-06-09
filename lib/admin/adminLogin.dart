@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/admin/authentication.dart';
 import 'package:eshop/admin/uploadItems.dart';
-import 'package:eshop/login-screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../Home/storehome.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 
 class AdminSignInPage extends StatelessWidget {

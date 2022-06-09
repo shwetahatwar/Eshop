@@ -1,7 +1,6 @@
 import 'package:eshop/Home/myDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../Utils/colors_utils.dart';
 import 'cart.dart';
 import 'cartitemcounter.dart';

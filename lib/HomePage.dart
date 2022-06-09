@@ -1,18 +1,10 @@
 import 'dart:async';
-
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:eshop/admin/uploadItems.dart';
-import 'package:eshop/login-screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import 'Walkthrough-screens/Page1.dart';
 import 'Walkthrough-screens/Page2.dart';
 import 'Walkthrough-screens/Page3.dart';
 import 'Walkthrough-screens/Page4.dart';
-import 'admin/adminLogin.dart';
-import 'admin/authentication.dart';
 import 'admin/profileScreen.dart';
 
 class HomePage extends StatelessWidget {

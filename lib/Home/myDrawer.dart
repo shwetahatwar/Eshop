@@ -2,9 +2,7 @@ import 'package:eshop/Home/cart.dart';
 import 'package:eshop/Home/storehome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../Utils/colors_utils.dart';
-import '../admin/profile.dart';
 import '../admin/profileScreen.dart';
 import '../login-screen.dart';
 
@@ -43,7 +41,7 @@ class MyDrawer extends StatelessWidget {
                     height: 160.0,
                     width: 160.0,
                     child: CircleAvatar(
-                      backgroundImage: AssetImage("assets/images/bag1.jpg"),
+                      backgroundImage: AssetImage("assets/images/becca-mchaffie-Fzde_6ITjkw-unsplash.jpg"),
                     ),
                   ),
                 ),

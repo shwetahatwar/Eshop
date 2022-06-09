@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'Home/storehome.dart';
 import 'SignUp.dart';
 import 'Utils/colors_utils.dart';
-import 'home_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
