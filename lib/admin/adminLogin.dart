@@ -50,7 +50,8 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
    late String? query;
    final _auth = FirebaseAuth.instance;
-   //final dbRef = FirebaseFirestore.instance.("admins");
+  CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('admins');
+
 
   @override
   Widget build(BuildContext context) {

@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../Utils/colors_utils.dart';
+import '../admin/profile.dart';
+import '../admin/profileScreen.dart';
 import '../login-screen.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -111,6 +113,16 @@ class MyDrawer extends StatelessWidget {
                         title: Text("Add New Address", style: TextStyle(color: Colors.white),),
                         onTap: (){
                           Route route = MaterialPageRoute(builder: (c) => StoreHome());
+                          Navigator.pushReplacement(context, route);
+                        },
+                      ),
+                      Divider(height: 10.0, color: Colors.white,thickness: 6.0,),
+
+                      ListTile(
+                        leading: Icon(Icons.person, color: Colors.white,),
+                        title: Text("Profile", style: TextStyle(color: Colors.white),),
+                        onTap: (){
+                          Route route = MaterialPageRoute(builder: (c) => SettingUI());
                           Navigator.pushReplacement(context, route);
                         },
                       ),
