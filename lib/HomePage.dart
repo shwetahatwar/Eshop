@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'package:eshop/admin/adminLogin.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'Walkthrough-screens/Page1.dart';
 import 'Walkthrough-screens/Page2.dart';
 import 'Walkthrough-screens/Page3.dart';
 import 'Walkthrough-screens/Page4.dart';
+import 'admin/index_list.dart';
 import 'admin/profileScreen.dart';
 
 class HomePage extends StatelessWidget {
@@ -20,14 +22,14 @@ Widget build(BuildContext context) {
 			children: [
 				// page view
 				SizedBox(
-					height: 550,
+					height: 500,
 					child: PageView(
 						onPageChanged: (index) {
 						setState(() => isLastPage = index == 4);
 						//after spalsh screen login page loading
 						Timer(Duration(seconds: 3), () {
 							Navigator.of(context)
-									.pushReplacement(MaterialPageRoute(builder: (_) => SettingUI()));
+									.pushReplacement(MaterialPageRoute(builder: (_) => AdminSignInPage()));
 							//later add adminsigninpage
 						});
 						},
@@ -40,7 +42,9 @@ Widget build(BuildContext context) {
 						],
 					),
 				),
-
+				SizedBox(
+					height: 5.0,
+				),
 				// dot indicators
 				SmoothPageIndicator(
 					controller: _controller,
@@ -48,12 +52,15 @@ Widget build(BuildContext context) {
 					effect: JumpingDotEffect(
 						activeDotColor: Colors.deepPurple,
 						dotColor: Colors.deepPurple.shade100,
-						dotHeight: 30,
-						dotWidth: 30,
+						dotHeight: 20,
+						dotWidth: 20,
 						spacing: 16,
 						//verticalOffset: 50,
 						jumpScale: 3,
 					),
+				),
+				SizedBox(
+					height: 5.0,
 				),
 			],
 		),

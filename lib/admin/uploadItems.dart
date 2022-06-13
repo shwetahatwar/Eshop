@@ -19,16 +19,16 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
   //ImagePicker picker = ImagePicker();
-  //  File? file;
-   File? imageFile;
+  //File? file;
+  XFile? imageFile;
+  final ImagePicker imagePicker = ImagePicker();
+  //File? imageFile;
   TextEditingController _descriptiontextEditingController = TextEditingController();
   TextEditingController _pricetextEditingController = TextEditingController();
   TextEditingController _titletextEditingController = TextEditingController();
   TextEditingController _shortInfotextEditingController = TextEditingController();
   String productId = DateTime.now().microsecondsSinceEpoch.toString();
   bool uploading = false;
-
-  File? get file => null;
 
   @override
   Widget build(BuildContext context) {
@@ -133,25 +133,16 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
         });
   }
 
-  // capturePhotoWithCamera() async {
-  //   Navigator.pop(context);
-  //   //File imageFile = await ImagePicker?.pickImage(source: ImageSource.camera, maxHeight:680.0,maxWidth:970.0);
-  //   File imageFile = await ImagePicker.pickImage(source: ImageSourceType.camera, maxHeight:680.0,maxWidth:970.0);
-  //
-  //   setState((){
-  //     file = imageFile;
-  //   });
-  // }
   capturePhotoWithCamera() async {
     Navigator.pop(context);
-    File? imageFile = (await ImagePicker().getImage(
+    PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.camera,
       maxWidth: 1800,
       maxHeight: 1800,
-    )) as File?;
-    if (imageFile != null) {
+    );
+    if (pickedFile != null) {
       setState(() {
-        imageFile = imageFile as File;
+        imageFile = pickedFile as XFile?;
       });
     }
   }
@@ -165,7 +156,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
     );
     if (pickedFile != null) {
       setState(() {
-        imageFile = pickedFile as File;
+        imageFile = pickedFile as XFile?;
       });
     }
   }
@@ -187,125 +178,138 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
         leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.purple,),onPressed: clearFormInfo,),
         title: Text("New Product",
           style: TextStyle(color: Colors.purple,
-          fontSize: 24.0, fontWeight: FontWeight.bold),),
+              fontSize: 24.0, fontWeight: FontWeight.bold),),
         actions: [
           FlatButton(
             onPressed: ()=> print("Clicked"),
             child: Text("Add",style: TextStyle(color: Colors.purple,
-            fontSize: 16.0,fontWeight: FontWeight.bold),),
+                fontSize: 16.0,fontWeight: FontWeight.bold),),
           )
         ],
       ),
       body: ListView(
-          children: [
-            uploading ? linearProgress() : Text(""),
-            Container(
-              height: 230.0,
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: 16/9,
-                  child: Container(
-                    decoration: BoxDecoration(image: DecorationImage(image: FileImage(file!),fit:BoxFit.cover )),
+        children: [
+          uploading ? linearProgress() : Text(""),
+          Container(
+            height: 230.0,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: 16/9,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 4,
+                      color: Colors.black26,
+                    ),
+                    shape: BoxShape.rectangle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/images/becca-mchaffie-Fzde_6ITjkw-unsplash.jpg"),
+                      //image: AssetImage("assets/images/becca-mchaffie-Fzde_6ITjkw-unsplash.jpg"),
+                    ),
                   ),
+                  //decoration: BoxDecoration(image: DecorationImage(image: FileImage(imageFile!!),fit:BoxFit.cover )),
                 ),
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 12.0)),
+          ),
+          Padding(padding: EdgeInsets.only(top: 12.0)),
 
-            ListTile(
-              leading: Icon(Icons.perm_device_information, color: Colors.purple,),
-              title: Container(
-                width: 250.0,
-                child: TextField(
-                  style: TextStyle(color: Colors.deepPurpleAccent),
-                  controller: _shortInfotextEditingController,
-                  decoration: InputDecoration(
-                    hintText: "Short Info",
-                    hintStyle: TextStyle(color: Colors.deepPurpleAccent),
-                    border: InputBorder.none,
-                  ),
+          ListTile(
+            leading: Icon(Icons.perm_device_information, color: Colors.purple,),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _shortInfotextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Short Info",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
                 ),
               ),
             ),
-            Divider(color: Colors.purple,),
+          ),
+          Divider(color: Colors.purple,),
 
-            ListTile(
-              leading: Icon(Icons.perm_device_information, color: Colors.purple,),
-              title: Container(
-                width: 250.0,
-                child: TextField(
-                  style: TextStyle(color: Colors.deepPurpleAccent),
-                  controller: _titletextEditingController,
-                  decoration: InputDecoration(
-                    hintText: "Title",
-                    hintStyle: TextStyle(color: Colors.deepPurpleAccent),
-                    border: InputBorder.none,
-                  ),
+          ListTile(
+            leading: Icon(Icons.perm_device_information, color: Colors.purple,),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _titletextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Title",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
                 ),
               ),
             ),
-            Divider(color: Colors.purple,),
+          ),
+          Divider(color: Colors.purple,),
 
-            ListTile(
-              leading: Icon(Icons.perm_device_information, color: Colors.purple,),
-              title: Container(
-                width: 250.0,
-                child: TextField(
-                  style: TextStyle(color: Colors.deepPurpleAccent),
-                  controller: _descriptiontextEditingController,
-                  decoration: InputDecoration(
-                    hintText: "Description",
-                    hintStyle: TextStyle(color: Colors.deepPurpleAccent),
-                    border: InputBorder.none,
-                  ),
+          ListTile(
+            leading: Icon(Icons.perm_device_information, color: Colors.purple,),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _descriptiontextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Description",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
                 ),
               ),
             ),
-            Divider(color: Colors.purple,),
+          ),
+          Divider(color: Colors.purple,),
 
-            ListTile(
-              leading: Icon(Icons.perm_device_information, color: Colors.purple,),
-              title: Container(
-                width: 250.0,
-                child: TextField(
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(color: Colors.deepPurpleAccent),
-                  controller: _pricetextEditingController,
-                  decoration: InputDecoration(
-                    hintText: "Price",
-                    hintStyle: TextStyle(color: Colors.deepPurpleAccent),
-                    border: InputBorder.none,
-                  ),
+          ListTile(
+            leading: Icon(Icons.perm_device_information, color: Colors.purple,),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                keyboardType: TextInputType.number,
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _pricetextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Price",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
                 ),
               ),
             ),
-            Divider(color: Colors.purple,),
+          ),
+          Divider(color: Colors.purple,),
 
-            ListTile(
-              leading: Icon(Icons.perm_device_information, color: Colors.purple,),
-              title: Container(
-                width: 250.0,
-                child: TextField(
-                  style: TextStyle(color: Colors.deepPurpleAccent),
-                  controller: _shortInfotextEditingController,
-                  decoration: InputDecoration(
-                    hintText: "Short Info",
-                    hintStyle: TextStyle(color: Colors.deepPurpleAccent),
-                    border: InputBorder.none,
-                  ),
+          ListTile(
+            leading: Icon(Icons.perm_device_information, color: Colors.purple,),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _shortInfotextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Short Info",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
                 ),
               ),
             ),
-            Divider(color: Colors.purple,)
-          ],
+          ),
+          Divider(color: Colors.purple,)
+        ],
       ),
     );
   }
   clearFormInfo(){
 
     setState((){
-      imageFile;
+      //imageFile;
+      imageFile = null;
       _descriptiontextEditingController.clear();
       _pricetextEditingController.clear();
       _shortInfotextEditingController.clear();
