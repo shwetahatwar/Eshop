@@ -1,7 +1,8 @@
-import 'package:file/file.dart';
+import 'dart:io';
 import 'package:eshop/Walkthrough-screens/Page4.dart';
 import 'package:eshop/admin/loadingWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import '../Utils/colors_utils.dart';
 import 'adminShiftOrders.dart';
@@ -20,8 +21,8 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
   bool get wantKeepAlive => true;
   //ImagePicker picker = ImagePicker();
   //File? file;
-  XFile? imageFile;
-  final ImagePicker imagePicker = ImagePicker();
+  File? imageFile;
+  //final ImagePicker imagePicker = ImagePicker();
   //File? imageFile;
   TextEditingController _descriptiontextEditingController = TextEditingController();
   TextEditingController _pricetextEditingController = TextEditingController();
@@ -29,6 +30,8 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
   TextEditingController _shortInfotextEditingController = TextEditingController();
   String productId = DateTime.now().microsecondsSinceEpoch.toString();
   bool uploading = false;
+
+  //File? get file => null;
 
   @override
   Widget build(BuildContext context) {
@@ -132,35 +135,40 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
           );
         });
   }
-
-  capturePhotoWithCamera() async {
+  
+ Future capturePhotoWithCamera() async {
     Navigator.pop(context);
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.camera,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        imageFile = pickedFile as XFile?;
+    try{
+      final imageFile = await ImagePicker().pickImage(source: ImageSource.camera);
+
+      if(imageFile == null) return;
+
+      final imageTemp = File(imageFile.path);
+      setState((){
+        this.imageFile = imageTemp;
       });
+    } on PlatformException catch(e){
+      print("failed to pick image: $e");
     }
   }
 
-  pickPhotoFromGallery() async {
+  Future pickPhotoFromGallery() async {
     Navigator.pop(context);
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        imageFile = pickedFile as XFile?;
-      });
-    }
-  }
+    try{
+      final imageFile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
+      if(imageFile == null) return;
+
+      final imageTemp = File(imageFile.path);
+      setState((){
+        this.imageFile = imageTemp;
+      });
+    } on PlatformException catch(e){
+      print("failed to pick image: $e");
+    }
+
+  }
+  
   displayAdminUploadFormScreen(){
     return Scaffold(
       appBar: AppBar(
@@ -205,7 +213,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
                     shape: BoxShape.rectangle,
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: AssetImage("assets/images/becca-mchaffie-Fzde_6ITjkw-unsplash.jpg"),
+                      image: FileImage(File(imageFile?.path ?? "")),
                       //image: AssetImage("assets/images/becca-mchaffie-Fzde_6ITjkw-unsplash.jpg"),
                     ),
                   ),
