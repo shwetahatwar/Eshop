@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/Home/myDrawer.dart';
+import 'package:eshop/Home/total_money_amount.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Utils/colors_utils.dart';
+import '../Widgets/search_box.dart';
 import 'cart.dart';
 import 'cartitemcounter.dart';
+import 'change_address.dart';
+import 'item_quantity.dart';
 
 double? width;
 
@@ -18,7 +23,13 @@ class _StoreHomeState extends State<StoreHome> {
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
-    return SafeArea(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (c) => CartItemCounter()),
+        ChangeNotifierProvider(create: (c) => ItemQuantity()),
+        ChangeNotifierProvider(create: (c) => AddressChange()),
+        ChangeNotifierProvider(create: (c) => TotalAmount()),
+    ],
         child:Scaffold(
           appBar: AppBar(
             flexibleSpace: Container(
@@ -73,6 +84,11 @@ class _StoreHomeState extends State<StoreHome> {
             ],
           ),
           drawer: MyDrawer(),
+          body: CustomScrollView(
+            slivers: [
+              SliverPersistentHeader(pinned: true,delegate: SearchBoxDelegate())
+            ],
+          ),
         ),
     );
   }
