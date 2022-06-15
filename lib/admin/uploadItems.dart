@@ -1,11 +1,14 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/Walkthrough-screens/Page4.dart';
 import 'package:eshop/admin/loadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import '../Utils/colors_utils.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'adminShiftOrders.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class UploadPage extends StatefulWidget {
   const UploadPage({Key? key}) : super(key: key);
@@ -183,14 +186,14 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter)),
         ),
-        leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.purple,),onPressed: clearFormInfo,),
+        leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.white,),onPressed: clearFormInfo,),
         title: Text("New Product",
-          style: TextStyle(color: Colors.purple,
+          style: TextStyle(color: Colors.white,
               fontSize: 24.0, fontWeight: FontWeight.bold),),
         actions: [
           FlatButton(
-            onPressed: ()=> print("Clicked"),
-            child: Text("Add",style: TextStyle(color: Colors.purple,
+            onPressed: uploading ? null : ()=> uploadImageAndSaveItemInfo(),
+            child: Text("Add",style: TextStyle(color: Colors.white,
                 fontSize: 16.0,fontWeight: FontWeight.bold),),
           )
         ],
@@ -324,5 +327,41 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
       _titletextEditingController.clear();
 
     });
+  }
+  uploadImageAndSaveItemInfo() async {
+    setState((){
+      uploading = true;
+    });
+    String imageDownloadUrl = await uploadItemImage(imageFile);
+    saveItemInfo(imageDownloadUrl);
+  }
+ Future<String> uploadItemImage(mfileImage) async{
+   final storageRef = FirebaseStorage.instance.ref().child("Items");
+   TaskSnapshot uploadTask = await storageRef.child("product_$productId.jpg").putFile(mfileImage);
+   TaskSnapshot taskSnapshot = await uploadTask;
+
+  String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+  return downloadUrl;
+ }
+  saveItemInfo(String downloadUrl){
+    final itemsRef = FirebaseFirestore.instance.collection("items");
+    itemsRef.doc(productId).set({
+      "shortInfo": _shortInfotextEditingController.text.trim(),
+      "longDescription": _descriptiontextEditingController.text.trim(),
+      "price": _pricetextEditingController.text.trim(),
+      "publishedDate": DateTime.now(),
+      "status": "availabel",
+      "thumbnailUrl": downloadUrl,
+      "title": _titletextEditingController.text.trim(),
+    });
+setState((){
+  imageFile = null;
+  uploading = false;
+  productId = DateTime.now().millisecondsSinceEpoch.toString();
+  _descriptiontextEditingController.clear();
+  _titletextEditingController.clear();
+  _shortInfotextEditingController.clear();
+  _pricetextEditingController.clear();
+});
   }
 }
