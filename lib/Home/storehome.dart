@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eshop/Home/body.dart';
 import 'package:eshop/Home/myDrawer.dart';
+import 'package:eshop/Home/product_pagee.dart';
 import 'package:eshop/Home/total_money_amount.dart';
 import 'package:eshop/Model/item.dart';
 import 'package:eshop/admin/loadingWidget.dart';
@@ -118,11 +120,16 @@ class _StoreHomeState extends State<StoreHome> {
     );
   }
 }
-
+//design for each product display on the storehome page
 Widget sourceInfo(ItemModel model, BuildContext context,{
    Color? background, removeCartFunction
 }){
   return InkWell(
+    onTap: (){
+      //reciving data on product page by name itemmodel
+      Route route = MaterialPageRoute(builder: (c) => ProductPagee(itemModel: model));
+      Navigator.pushReplacement(context, route);
+    },
     splashColor: Colors.pink,
     child: Padding(
       padding: EdgeInsets.all(6.0),
