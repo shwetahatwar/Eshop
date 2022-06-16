@@ -136,18 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
 class MySearchDelegate extends SearchDelegate {
 
   CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('watch');
-
-  // List<String> searchTerms = [
-  //   "Apple",
-  //   "Banana",
-  //   "Mango",
-  //   "Pear",
-  //   "Watermelons",
-  //   "Blueberries",
-  //   "Pineapples",
-  //   "Strawberries"
-  // ];
-
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [

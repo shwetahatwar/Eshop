@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eshop/Walkthrough-screens/Page4.dart';
+import 'package:eshop/admin/adminLogin.dart';
 import 'package:eshop/admin/loadingWidget.dart';
+import 'package:eshop/login-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import '../Utils/colors_utils.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'adminShiftOrders.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class UploadPage extends StatefulWidget {
   const UploadPage({Key? key}) : super(key: key);
@@ -68,7 +68,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold),),
             onPressed: () {
-              Route route = MaterialPageRoute(builder: (c) => Page4());
+              Route route = MaterialPageRoute(builder: (c) => SignInScreen());
               Navigator.pushReplacement(context, route);
             },
           )
@@ -348,7 +348,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
     itemsRef.doc(productId).set({
       "shortInfo": _shortInfotextEditingController.text.trim(),
       "longDescription": _descriptiontextEditingController.text.trim(),
-      "price": _pricetextEditingController.text.trim(),
+      "price": int.parse(_pricetextEditingController.text),
       "publishedDate": DateTime.now(),
       "status": "availabel",
       "thumbnailUrl": downloadUrl,

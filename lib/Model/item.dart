@@ -22,12 +22,22 @@ class ItemModel {
     title = json['title'];
     shortInfo = json['shortInfo'];
     publishedDate = json['publishedDate'];
-    thumbnailUrl = json['thumbnailUrl'];
+    thumbnailUrl = json['thumbnailUrl'] ;
     longDescription = json['longDescription'];
     status = json['status'];
     price = json['price'];
+    //return ItemModel(title: title, shortInfo: shortInfo,publishedDate: publishedDate,thumbnailUrl: thumbnailUrl,longDescription: longDescription,status: status,price: price);
   }
-  // Map<String, dynamic> toJson() {
-  //
-  // }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic> ();
+    data["title"] =  this.title;
+    data["shortInfo"] = this.shortInfo;
+    data["publishedDate"] = this.publishedDate;
+    data["thumbnailUrl"] = this.thumbnailUrl;
+    data["longDescription"] = this.longDescription;
+    data["status"] = this.status;
+    data["price"] = this.price;
+    return data;
+  }
+  
 }
